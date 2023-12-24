@@ -28,8 +28,3 @@ if __name__=="__main__":
 
     # After converting to json push records into mongo db
     client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_records)
-
-
-
-
-
