@@ -17,7 +17,7 @@ class DataIngestion:
 
     def __init__(self,data_ingestion_config:config_entity.DataIngestionConfig):
         try:
-            logging.info(f"{'>==>..'*20} Data Ingestion {'>==>..'*20}" )
+            logging.info(f"{'..>==>..'*5} Data Ingestion {'..>==>..'*5}" )
             self.data_ingestion_config=data_ingestion_config
         except Exception as e:
             raise ThyDetectException(e, sys)
@@ -41,10 +41,14 @@ class DataIngestion:
             #saving dataframe into csv format
             logging.info("saving dataset in feature store.")
             df.to_csv(path_or_buf=self.data_ingestion_config.feature_store_file_path, header=True, index=False)
+            logging.info(f"rows and columns in df: {df.shape}")
+
 
             #Splitting data into train and test
             logging.info("splitting dataset into train and test dataset.")
             train_df,test_df = train_test_split(df,test_size=self.data_ingestion_config.test_size,random_state=42)
+            logging.info(f"rows and columns in train df: {train_df.shape} \n rows and columns in test df: {test_df.shape}")
+
 
             #creating dataset directory,if already do not exist
             dataset_dir = os.path.dirname(self.data_ingestion_config.train_file_path)
