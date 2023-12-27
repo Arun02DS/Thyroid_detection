@@ -39,3 +39,22 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
         raise ThyDetectException(e, sys)
     
 
+def make_df(df):
+    """
+    ========================================================================
+    Descrption: Convert all values for thyroid detected as "Yes"
+
+    Return: Pandas DataFrame
+    ========================================================================
+    """
+    try:
+        val = list(df['Diagnosis'].unique())
+        val = val[1:len(val)]
+        df['Diagnosis']= df['Diagnosis'].replace(val,'Yes')
+        #Dropping all rows where sex/gender is not known for the person.
+        df.dropna(subset=['sex'],inplace=True)
+        df.reset_index(drop=True, inplace=True)
+        return df
+
+    except Exception as e:
+        raise ThyDetectException(e, sys)
