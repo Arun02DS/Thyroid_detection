@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np 
 import os,sys
 from sklearn.model_selection import train_test_split
+from src.config import col_names
 
 """
 This script prepare for data ingestion phase of training pipeline.
@@ -17,7 +18,7 @@ class DataIngestion:
 
     def __init__(self,data_ingestion_config:config_entity.DataIngestionConfig):
         try:
-            logging.info(f"{'..>==>..'*5} Data Ingestion {'..>==>..'*5}" )
+            logging.info(f"{'..>==>..'*4} Data Ingestion {'..<==<..'*4}")
             self.data_ingestion_config=data_ingestion_config
         except Exception as e:
             raise ThyDetectException(e, sys)
@@ -32,7 +33,7 @@ class DataIngestion:
             #Save data in feature store
             df.replace(to_replace='?',value=np.NAN,inplace=True)
             #making changes to datset as per notebook
-            df=utils.make_df(df=df)
+            df=utils.make_df(df=df,col_names=col_names)
 
             #create a feature store folder
             feature_store_dir = os.path.dirname(self.data_ingestion_config.feature_store_file_path)

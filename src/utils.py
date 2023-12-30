@@ -2,8 +2,9 @@ import pandas as pd
 from src.config import mongo_client
 from src.logger import logging
 from src.exception import ThyDetectException
-import sys
-
+import sys,os
+import yaml
+from typing import List
 
 """
 This script contains the most common functions used regularly in this project.
@@ -15,8 +16,9 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
     =====================================================================
 
     Description: This function returns collection as dataframe.
-    database_name:database name
-    collection_name: collection name
+
+    Input:  database_name:database name
+            collection_name: collection name
 
     Return: Pandas dataframe of collections.
     ======================================================================
@@ -39,22 +41,67 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
         raise ThyDetectException(e, sys)
     
 
-def make_df(df):
+def make_df(df: pd.DataFrame, col_names: List[str]) -> pd.DataFrame:
     """
     ========================================================================
-    Descrption: Convert all values for thyroid detected as "Yes"
+    Convert all values for thyroid detected to "Yes" in a Pandas DataFrame.
 
-    Return: Pandas DataFrame
+    Input:
+    - df: Pandas DataFrame
+    - col_names: List of column names to manupulate/ drop na values in rows
+
+    Return:
+    Pandas DataFrame with updated thyroid detection values
+
     ========================================================================
     """
     try:
-        val = list(df['Diagnosis'].unique())
-        val = val[1:len(val)]
-        df['Diagnosis']= df['Diagnosis'].replace(val,'Yes')
-        #Dropping all rows where sex/gender is not known for the person.
-        df.dropna(subset=['sex'],inplace=True)
+        # Replacing all values in specified columns with 'Yes' if they are not 'No' or NaN
+        df[col_names[0]] = df[col_names[0]].apply(lambda x: 'Yes' if pd.notnull(x) and x != 'No' else x)
+
+        # Dropping rows where gender information is missing
+        logging.info("dropping rows where gender is not known/provided")
+        df.dropna(subset=[col_names[1]], inplace=True)
         df.reset_index(drop=True, inplace=True)
+        
         return df
 
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def convert_column_dtype(df:pd.DataFrame)->pd.DataFrame:
+    """
+    ===================================================================================
+
+    Description: This function convert all dtype to numerical if they are int or float
+    else it will be object type.
+
+    Input : Pandas dataframe
+    Return: Pandas dataframe
+
+    =======================================================================================
+
+    """
+    try:
+        for col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='ignore')
+        return df
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def write_yaml_file(file_path,data:dict):
+    """
+    ===========================================================================================
+    Description: This fuction writes file in yaml format in a specified file path.
+    ===========================================================================================
+    
+    """
+    try:
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir,exist_ok=True)
+
+        with open(file_path,"w") as file_writer:
+            yaml.dump(data,file_writer)
+            
     except Exception as e:
         raise ThyDetectException(e, sys)
