@@ -5,6 +5,8 @@ from src.exception import ThyDetectException
 import sys,os
 import yaml
 from typing import List
+import dill
+import numpy as np
 
 """
 This script contains the most common functions used regularly in this project.
@@ -103,5 +105,81 @@ def write_yaml_file(file_path,data:dict):
         with open(file_path,"w") as file_writer:
             yaml.dump(data,file_writer)
             
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def save_object(file_path:str,obj:object)->None:
+    """
+    ==================================================================================
+    Description: This function save the object in a file path.
+
+    Return: None
+    ==================================================================================
+    
+    """
+    try:
+        logging.info(f"Saving the object in {file_path}")
+        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+        with open(file_path,'wb') as file_obj:
+            dill.dump(obj,file_obj)
+        logging.info(f"File: {file_path} Saved sucessfully!!!")
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def load_object(file_path:str)->object:
+    """
+    ==================================================================================
+    Description: This function load the object.
+
+    Return: Object
+    ==================================================================================
+    
+    """
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"The file: {file_path} does not exist")
+        with open(file_path,'rb') as file_obj:
+            return dill.load(file_obj)
+        logging.info(f"file : {file_path} loaded sucessfully")
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def save_numpy_arr_data(file_path:str,array:np.array):
+    """
+    ==================================================================================
+    Description: This function save numpy array in a file path.
+
+    Return: None
+    ==================================================================================
+    
+    """
+    try:
+        logging.info(f"Saving the object in {file_path}")
+        dir_path =os.path.dirname(file_path)
+        os.makedirs(dir_path,exist_ok=True)
+
+        with open(file_path,'wb') as file_obj:
+            np.save(file_obj,array)
+        logging.info(f"File: {file_path} saved sucessfully!!!")
+
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def load_numpy_array_data(file_path:str)->np.array:
+    """
+    ==================================================================================
+    Description: This function load numpy array.
+
+    Return: Numpy array.
+    ==================================================================================
+    
+    """
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"The file: {file_path} does not exist")
+
+        with open(file_path,'rb') as file_obj:
+            return np.load(file_obj)
+        logging.info(f"file : {file_path} loaded sucessfully")
     except Exception as e:
         raise ThyDetectException(e, sys)

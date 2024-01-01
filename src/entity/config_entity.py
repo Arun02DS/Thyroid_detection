@@ -7,6 +7,8 @@ from src.exception import ThyDetectException
 FILE_NAME='thyroid.csv'
 TRAIN_FILE_NAME='train.csv'
 TEST_FILE_NAME='test.csv'
+TRANSFORMER_OBJECT_FILE_NAME='transformer.pkl'
+LABEL_ENCODER_OBJECT_FILE_NAME='label_encoder.pkl'
 
 class TrainingPipelineConfig:
 
@@ -42,7 +44,16 @@ class DataValidationConfig:
         self.report_file_path = os.path.join(self.data_validation_dir,'report.yaml')
         self.na_threshold=0.20
         self.base_file_path = os.path.join('thyroid_data_.csv')
-class DataTransformationConfig:...
+
+class DataTransformationConfig:
+    
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir,'data_transformation')
+        self.transformation_object_path = os.path.join(self.data_transformation_dir,'transformer',TRANSFORMER_OBJECT_FILE_NAME)
+        self.transformation_train_path = os.path.join(self.data_transformation_dir,'transformed',TRAIN_FILE_NAME.replace("csv","npz"))
+        self.transformation_test_path = os.path.join(self.data_transformation_dir,'transformed',TEST_FILE_NAME.replace("csv","npz"))
+        self.label_encoder_path = os.path.join(self.data_transformation_dir,'label_encoder',LABEL_ENCODER_OBJECT_FILE_NAME)
+
 class ModelTrainerConfig:...
 class ModelEvaluationConfig:...
 class ModelPusherConfig:...
