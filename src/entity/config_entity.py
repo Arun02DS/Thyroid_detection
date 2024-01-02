@@ -9,6 +9,7 @@ TRAIN_FILE_NAME='train.csv'
 TEST_FILE_NAME='test.csv'
 TRANSFORMER_OBJECT_FILE_NAME='transformer.pkl'
 LABEL_ENCODER_OBJECT_FILE_NAME='label_encoder.pkl'
+MODEL_FILE_NAME = 'model.pkl'
 
 class TrainingPipelineConfig:
 
@@ -54,6 +55,13 @@ class DataTransformationConfig:
         self.transformation_test_path = os.path.join(self.data_transformation_dir,'transformed',TEST_FILE_NAME.replace("csv","npz"))
         self.label_encoder_path = os.path.join(self.data_transformation_dir,'label_encoder',LABEL_ENCODER_OBJECT_FILE_NAME)
 
-class ModelTrainerConfig:...
+class ModelTrainerConfig:
+
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        self.model_trainer_dir= os.path.join(training_pipeline_config.artifact_dir,'model_trainer')
+        self.model_path = os.path.join(self.model_trainer_dir,"model",MODEL_FILE_NAME)
+        self.expected_score = 0.80
+        self.overfitting_threshold = 0.10
+
 class ModelEvaluationConfig:...
 class ModelPusherConfig:...
