@@ -69,13 +69,17 @@ class DataTransformation:
             object_cols = train_df.select_dtypes(include='object').columns.tolist()
 
             logging.info(f"We have {len(numeric_cols)} numerical features: {numeric_cols}")
-            logging.info(f"We have {len(object_cols)} numerical features: {object_cols}")
+            logging.info(f"We have {len(object_cols)} categorical features: {object_cols}")
 
             #One hot Encoding the train and test data
-            label_encoder = LabelEncoder()
+            label_encoder = {}
             for col in object_cols:
-                train_df[col] = label_encoder.fit_transform(train_df[col])
-                test_df[col] = label_encoder.transform(test_df[col])
+                label_encode = LabelEncoder()
+                combined_data = pd.concat([train_df[col], test_df[col]], axis=0)
+                label_encode.fit(combined_data)
+                train_df[col] = label_encode.fit_transform(train_df[col])
+                test_df[col] = label_encode.transform(test_df[col])
+                label_encoder[col]=label_encode
 
             input_feature_train_df = train_df.drop(col_names[0],axis=1)
             input_feature_test_df = test_df.drop(col_names[0],axis=1)
