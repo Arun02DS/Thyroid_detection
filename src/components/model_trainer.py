@@ -8,6 +8,12 @@ from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 from src.config import pram_grid,col_names
 
+
+"""
+This script prepare for data trainer phase of training pipeline.
+
+"""
+
 class ModelTrainer:
 
     def __init__(self,model_trainer_config:config_entity.ModelTrainerConfig,

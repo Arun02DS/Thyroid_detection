@@ -13,6 +13,10 @@ from src.config import col_names
 from sklearn.preprocessing import LabelEncoder
 
 
+"""
+This script prepare for data transformation phase of training pipeline.
+
+"""
 class DataTransformation:
 
     def __init__(self,data_transformation_config:config_entity.DataTransformationConfig,

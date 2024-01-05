@@ -6,6 +6,12 @@ from src.Prediction import ModelResolver
 from src.utils import load_object,save_object
 
 
+"""
+This script prepare for data pusher phase of training pipeline.
+
+"""
+
+
 class ModelPusher:
 
     def __init__(self,model_pusher_config:config_entity.ModelPusherConfig,

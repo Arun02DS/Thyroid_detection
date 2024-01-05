@@ -3,10 +3,16 @@ from src.Prediction import ModelResolver
 from src.logger import logging
 from src.exception import ThyDetectException
 import os,sys
-from src.utils import load_object,convert_column_dtype
+from src.utils import load_object,convert_column_dtype,inverse_trans,trans
 import pandas as pd
 from src.config import col_names
 from sklearn.metrics import f1_score
+
+
+"""
+This script prepare for data evaluation phase of training pipeline.
+
+"""
 
 class ModelEvaluation:
 
@@ -61,9 +67,7 @@ class ModelEvaluation:
             test_df = convert_column_dtype(df=test_df)
             object_cols = test_df.select_dtypes(include='object').columns.tolist()
             
-            for col in object_cols:
-                label_encode = label_encoder[col]
-                test_df[col]=label_encode.transform(test_df[col])
+            test_df = trans(cols=object_cols, encoder=label_encoder, df=test_df)
             y_true = test_df[col_names[0]]
 
             #Checking accuracy using previous model
@@ -73,10 +77,8 @@ class ModelEvaluation:
             input_arr = transformer.transform(test_df[input_feature_name])
             y_pred = model.predict(input_arr)
 
-            if col_names[0] in label_encoder:
-                encoder=label_encoder[col_names[0]]
-                y_pred_inverse=encoder.inverse_transform(y_pred[:5])
-                logging.info(f"Prediction using previous model: {y_pred_inverse},{y_true[:5]}")
+            y_pred_inverse = inverse_trans(col=col_names[0], encoder=label_encoder, y_pred=y_pred[:5])
+            logging.info(f"Prediction using previous model: {y_pred_inverse},{y_true[:5].values.tolist()}")
             Previous_model_score = f1_score(y_true=y_true,y_pred=y_pred)
             logging.info(f"Accuracy using previous model: {Previous_model_score}")
 
@@ -86,9 +88,7 @@ class ModelEvaluation:
             object_cols = test_df_current.select_dtypes(include='object').columns.tolist()
             #checking with current model
             
-            for col in object_cols:
-                current_label_encode = current_label_encoder[col]
-                test_df_current[col]=current_label_encode.transform(test_df_current[col])
+            test_df_current = trans(cols=object_cols, encoder=current_label_encoder, df=test_df_current)
             y_true_current = test_df_current[col_names[0]]
 
             logging.info("checking accuracy using current model")
@@ -96,12 +96,10 @@ class ModelEvaluation:
             input_arr_current = current_transformer.transform(test_df_current[input_feature_name_current])
             y_pred_current = current_model.predict(input_arr_current)
 
-            if col_names[0] in current_label_encoder:
-                current_encoder=current_label_encoder[col_names[0]]
-                y_pred_inverse_current=current_encoder.inverse_transform(y_pred_current[:5])
-                logging.info(f"Prediction using previous model: {y_pred_inverse_current},{y_true_current[:5]}")
+            y_pred_inverse_current = inverse_trans(col=col_names[0], encoder=current_label_encoder, y_pred=y_pred_current[:5])
+            logging.info(f"Prediction using current model: {y_pred_inverse_current},{y_true_current[:5].values.tolist()}")
             current_model_score = f1_score(y_true=y_true_current,y_pred=y_pred_current)
-            logging.info(f"Accuracy using previous model: {current_model_score}")
+            logging.info(f"Accuracy using current model: {current_model_score}")
 
             if current_model_score <= Previous_model_score:
                 logging.info("Current trained model is not better than previously trained model")

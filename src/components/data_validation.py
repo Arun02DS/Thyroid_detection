@@ -11,7 +11,7 @@ from src import utils
 from src.config import col_names
 
 """
-This script will run after data ingestion phase.
+This script will run after data validation phase.
 
 """
 
@@ -65,6 +65,16 @@ class DataValidation:
             raise ThyDetectException(e, sys)
 
     def is_required_column_exist(self,base_df:pd.DataFrame,current_df:pd.DataFrame,report_key_name:str)->bool:
+        """
+        ====================================================================================================
+
+        Description: This function checks if current columns and base columns having any missing columns.
+
+        Return: Boolean value.
+
+        =====================================================================================================
+
+        """
         try:
             
             #base and current columns
@@ -87,6 +97,16 @@ class DataValidation:
             raise ThyDetectException(e, sys)
 
     def data_drift(self,base_df:pd.DataFrame,current_df:pd.DataFrame,report_key_name:str):
+        """
+        ====================================================================================================
+
+        Description: This function takes checks drift in base dataset and current dataset.
+
+        Return: None.
+
+        =====================================================================================================
+
+        """
         try:
             drift_report=dict()
             base_columns=base_df.columns

@@ -183,3 +183,38 @@ def load_numpy_array_data(file_path:str)->np.array:
         logging.info(f"file : {file_path} loaded sucessfully")
     except Exception as e:
         raise ThyDetectException(e, sys)
+
+def inverse_trans(col,encoder,y_pred):
+    """
+    ==================================================================================
+    Description: This function finds a column name in encoder and perform inverse transform.
+
+    Return: inverse transform.
+    ==================================================================================
+    
+    """
+    try:
+        if col in encoder:
+            tar_encoder=encoder[col]
+            y_pred_inverse = tar_encoder.inverse_transform(y_pred)
+            return y_pred_inverse
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+
+def trans(cols:List,encoder,df:pd.DataFrame)->pd.DataFrame:
+    """
+    ==================================================================================
+    Description: This function finds a column name in df and perform transformation.
+
+    Return: df.
+    ==================================================================================
+    
+    """
+    try:
+        for col in cols:
+            label_encode = encoder[col]
+            df[col]=label_encode.transform(df[col])
+        return df
+    except Exception as e:
+        raise ThyDetectException(e, sys)
+

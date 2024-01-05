@@ -11,7 +11,9 @@ HYPHEN_E_DOT = "-e ."
 
 def get_requirements()->List[str]:
     """
-This fuction read all required packages for project and return as list.
+    Description: This fucntion read all required packages for project.
+
+    Return: List of requirement.txt
 
     """
     with open(REQUIREMENT_FILE_NAME) as requirement_file:
