@@ -14,7 +14,7 @@ MODEL_FILE_NAME = 'model.pkl'
 class TrainingPipelineConfig:
 
     def __init__(self):
-        self.artifact_dir= os.path.join(os.getcwd(),"artifact",f"{datetime.now().strftime('%d%m%Y__%H%M%s')}")
+        self.artifact_dir= os.path.join(os.getcwd(),"artifact",f"{datetime.now().strftime('%d%m%Y__%H%M%S')}")
         os.makedirs(self.artifact_dir,exist_ok=True)
 
 class DataIngestionConfig:

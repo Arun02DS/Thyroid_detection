@@ -44,7 +44,7 @@ def start_batch_prediction(input_file_path):
         df['prediction'] = prediction
         df['cat_prediction'] = cat_prediction
 
-        prediction_file_name = os.path.basename(input_file_path).replace(".csv",f"{datetime.now().strftime('%d%m%Y__%H%M%s')}.csv")
+        prediction_file_name = os.path.basename(input_file_path).replace(".csv",f"{datetime.now().strftime('%d%m%Y__%H%M%S')}.csv")
         prediction_file_path = os.path.join(prediction_dir,prediction_file_name)
         df.to_csv(prediction_file_path,index=False,header=True)
         return prediction_file_path

@@ -1,6 +1,7 @@
 import pymongo
 import pandas as pd
 import json
+from src.config import mongo_client
 
 """
 This file upload/dump the csv format file on mongo database.
@@ -9,7 +10,7 @@ This file upload/dump the csv format file on mongo database.
 
 
 # Provide the mongodb localhost url to connect python to mongodb.
-client = pymongo.MongoClient("mongodb://localhost:27017/neurolabDB")
+#client = pymongo.MongoClient("mongodb://localhost:27017/neurolabDB")
 
 DATA_FILE_PATH="/config/workspace/thyroid_data_.csv"
 DATABASE_NAME="thyroid"
@@ -26,5 +27,5 @@ if __name__=="__main__":
     
 
     # After converting to json push records into mongo db
-    client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_records)
+    mongo_client[DATABASE_NAME][COLLECTION_NAME].insert_many(json_records)
     print(f"****Records uploaded in Mongodb****\nrows and columns : {df.shape},\n1st row record in json format: \n{json_records[0]}")
