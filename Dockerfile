@@ -8,7 +8,7 @@ ENV AIRFLOW_HOME ="/app/airflow"
 ENV AIRFLOW__CORE__DAGBAG_IMPORT_TIMEOUT=1000
 ENV AIRFLOW__CORE__ENABLE_XCOM_PICKLING=True
 RUN airflow db init
-RUN airflow users create -e arun2negime@gmail.com -f Arun -l Negi -p admin -r Admin -u admin
+RUN airflow users create -e arun02negime@gmail.com -f Arun -l Negi -p admin -r Admin -u admin
 RUN chmod 777 start.sh
 RUN apt update -y && apt install awscli -y
 ENTRYPOINT ['/bin/sh']
