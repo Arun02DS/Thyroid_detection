@@ -8,7 +8,7 @@ from airflow.operators.python import PythonOperator
 
 with DAG(
     'thyroid_training',
-    default_arg={'retries': 2},
+    default_args={'retries': 2},
     description='thyroid disease detection',
     schedule_interval="@weekly",
     start_date=pendulum.datetime(2024,9,1,tz="UTC"),
