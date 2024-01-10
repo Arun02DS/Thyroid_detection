@@ -16,8 +16,8 @@ with DAG(
     tags=['prediction'],
 ) as dag:
 
-    def download_file(**kwargs):
-        bucket_name=os.getenv("BUCKET_NAME")
+    def download_files(**kwargs):
+        bucket_name = os.getenv("BUCKET_NAME")
         input_dir = "/app/input_files"
         #creating directory
         os.makedirs(input_dir,exist_ok=True)
