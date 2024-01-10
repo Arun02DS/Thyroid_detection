@@ -13,7 +13,7 @@ with DAG(
     # [END default_args]
     description='Thyroid Detection',
     schedule_interval="@weekly",
-    start_date=pendulum.datetime(2022, 12, 11, tz="UTC"),
+    start_date=pendulum.datetime(2024, 1, 10, tz="UTC"),
     catchup=False,
     tags=['example'],
 ) as dag:
@@ -27,7 +27,7 @@ with DAG(
         os.system(f"aws s3 sync s3://{bucket_name}/input_files /app/input_files")
 
     def batch_prediction(**kwargs):
-        from sensor.pipeline.batch_prediction import start_batch_prediction
+        from src.pipeline.batch_prediction import start_batch_prediction
         input_dir = "/app/input_files"
         for file_name in os.listdir(input_dir):
             #make prediction
