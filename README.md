@@ -38,7 +38,7 @@ Before we run the project, make sure that you are having MongoDB Account since w
 
 ## Training Pipeline
 
-![image]([./config/workspace/Architecture/Training_pipeline.png](https://github.com/Arun02DS/Thyroid_detection/blob/main/Architecture/Project_Architechture.png?raw=true))
+![image](https://github.com/Arun02DS/Thyroid_detection/blob/c2b3d9e5d780ad02f219bc90fd909af2643f1161/Architecture/Training_pipeline.png)
 
 ## Project Architechture
 
