@@ -42,7 +42,7 @@ Before we run the project, make sure that you are having MongoDB Account since w
 
 ## Project Architechture
 
-![image1](./config/workspace/Architecture/Project_Architechture.png)
+![image1](https://github.com/Arun02DS/Thyroid_detection/blob/298af1ddf70e08a84f7a157d1c0cff8d6d252134/Architecture/Project_Architechture.png)
 
 ### Step 1 - Clone repository
 
