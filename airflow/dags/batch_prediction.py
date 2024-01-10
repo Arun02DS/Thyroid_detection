@@ -8,9 +8,9 @@ from airflow.operators.python import PythonOperator
 
 with DAG(
     'batch_prediction',
-    default_arg={'owner': 'Arun Singh Negi','retires':2},
+    default_arg={'retires':2},
     description='thyroid disease detection',
-    schedule_interval='@weekly',
+    schedule_interval="@weekly",
     start_date=pendulum.datetime(2024,9,1,tz="UTC"),
     catchup=False,
     tags=['prediction'],
