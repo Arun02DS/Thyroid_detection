@@ -13,7 +13,7 @@ Challenge is to diagnose the disease at early as possible.
 dataset: https://archive.ics.uci.edu/dataset/102/thyroid+disease
 ```
 ## Solution Proposed
-In this project, solution is focused on prediction of thyroid disease while checking on different tests data and evaluation of doctors. Dataset diagnosis column consists of 32 outputs suggesting doctor's diagnosis. For this project as 9172 datapoints are there hence converting column into "yes" and "No". Different experiments are donr to get the higher accuracy.
+In this project, solution is focused on prediction of thyroid disease while checking on different test data and evaluation of doctors. Dataset diagnosis column consists of 32 outputs suggesting doctor's diagnosis. For this project as 9172 datapoints are there hence converting column into "yes" and "No". Different experiments are donr to get the higher accuracy.
 
 --------
 
@@ -38,7 +38,7 @@ Before we run the project, make sure that you are having MongoDB Account since w
 
 ## Training Pipeline
 
-![image](./config/workspace/Architecture/Training_pipeline.png)
+![image]([./config/workspace/Architecture/Training_pipeline.png](https://github.com/Arun02DS/Thyroid_detection/blob/main/Architecture/Project_Architechture.png?raw=true))
 
 ## Project Architechture
 
