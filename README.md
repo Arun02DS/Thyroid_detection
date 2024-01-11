@@ -86,3 +86,24 @@ python main.py
     - BUCKET_NAME = ${BUCKET_NAME}
     - AWS_ECR_LOGIN_URI= ${AWS_ECR_LOGIN_URI}
     - ECR_REPOSITORY_NAME= ${ECR_REPOSITORY_NAME}
+
+### step 7 - install docker in EC2
+
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ubuntu
+newgrp docker
+```
+### run image
+
+```bash
+./run.sh
+
+```
+## Project link airflow
+
+```bash
+http://ec2-43-204-114-165
+
+```
