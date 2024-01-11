@@ -104,6 +104,6 @@ newgrp docker
 ## Project link airflow
 
 ```bash
-http://ec2-43-204-114-165
+http://ec2-100-26-156-157.compute-1.amazonaws.com:8080
 
 ```
